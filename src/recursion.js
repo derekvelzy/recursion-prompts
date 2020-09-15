@@ -227,21 +227,51 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  if (str1.length === 0 && str2.length === 0) {
+    return true;
+  }
+  let first1 = str1.slice(0, 1);
+  let first2 = str2.slice(0, 1);
+  if (first1 === first2) {
+    let cut1 = str1.slice(1);
+    let cut2 = str2.slice(1);
+    return compareStr(cut1, cut2);
+  }
+  return false;
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str) {
+  if (str.length === 1) {
+    return [str];
+  }
+  let list = createArray(str.slice(1));
+  list.unshift(str[0]);
+  return list;
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function(array) {
+  if (array.length === 1) {
+    return array;
+  }
+  let chop = array.shift();
+  let list = reverseArr(array);
+  list.push(chop);
+  return list;
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+  if (length === 1) {
+    return [value];
+  }
+  let arr = buildList(value, length - 1);
+  arr.push(value);
+  return arr;
 };
 
 // 19. Implement FizzBuzz. Given integer n, return an array of the string representations of 1 to n.
@@ -250,6 +280,20 @@ var buildList = function(value, length) {
 // For numbers which are multiples of both three and five, output “FizzBuzz” instead of the number.
 // fizzBuzz(5) // ['1','2','Fizz','4','Buzz']
 var fizzBuzz = function(n) {
+  if (n === 1) {
+    return ['1'];
+  }
+  let arr = fizzBuzz(n - 1);
+  if ((n % 3 === 0) && (n % 5 === 0)) {
+    arr.push('FizzBuzz');
+  } else if (n % 3 === 0) {
+    arr.push('Fizz');
+  } else if (n % 5 === 0) {
+    arr.push('Buzz');
+  } else {
+    arr.push(n.toString());
+  }
+  return arr;
 };
 
 // 20. Count the occurence of a value in a list.
